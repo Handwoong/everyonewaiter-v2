@@ -35,7 +35,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ActiveProfiles("test")
-@Sql({"classpath:data.sql"})
+@Sql({"classpath:db/data.sql"})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @AutoConfigureRestDocs
@@ -53,6 +53,21 @@ public class ControllerTestProvider {
 
     @Autowired
     private DatabaseCleaner databaseCleaner;
+
+    private static String getToken(final MemberLoginRequest loginRequest) {
+        final ExtractableResponse<Response> loginResponse = login(loginRequest);
+        final TokenResponse tokenResponse = loginResponse.body().as(TokenResponse.class);
+        return tokenResponse.token();
+    }
+
+    private static ExtractableResponse<Response> login(final MemberLoginRequest loginRequest) {
+        return RestAssured
+                .given(getSpecification()).log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(loginRequest)
+                .when().post("/api/members/login")
+                .then().log().all().extract();
+    }
 
     @BeforeEach
     void setUp(final RestDocumentationContextProvider provider) {
@@ -75,20 +90,5 @@ public class ControllerTestProvider {
     @AfterEach
     void clear() {
         databaseCleaner.execute();
-    }
-
-    private static String getToken(final MemberLoginRequest loginRequest) {
-        final ExtractableResponse<Response> loginResponse = login(loginRequest);
-        final TokenResponse tokenResponse = loginResponse.body().as(TokenResponse.class);
-        return tokenResponse.token();
-    }
-
-    private static ExtractableResponse<Response> login(final MemberLoginRequest loginRequest) {
-        return RestAssured
-                .given(getSpecification()).log().all()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(loginRequest)
-                .when().post("/api/members/login")
-                .then().log().all().extract();
     }
 }

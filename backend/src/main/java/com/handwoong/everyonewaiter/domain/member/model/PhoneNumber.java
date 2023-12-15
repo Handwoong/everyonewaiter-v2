@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 
 @Embeddable
 public record PhoneNumber(
-        @Column(length = 20, unique = true, nullable = false)
+        @Column(length = 20, nullable = false)
         String phoneNumber
 ) {
     public static final String PHONE_NUMBER_REGEX = "^01[016789]\\d{7,8}$";

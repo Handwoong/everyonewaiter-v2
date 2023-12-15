@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 
 @Embeddable
 public record Email(
-        @Column(length = 50, unique = true, nullable = false)
+        @Column(length = 50, nullable = false)
         String email
 ) {
     public static final String EMAIL_REGEX = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
