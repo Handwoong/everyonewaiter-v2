@@ -1,6 +1,7 @@
 package com.handwoong.everyonewaiter.domain.member.model;
 
 import com.handwoong.everyonewaiter.domain.BaseEntity;
+import com.handwoong.everyonewaiter.domain.member.dto.MemberRegisterRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -15,6 +16,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Entity
@@ -49,8 +51,27 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
+    private Member(final Email email, final Password password, final PhoneNumber phoneNumber) {
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.role = MemberRole.ROLE_USER;
+        this.status = MemberStatus.INACTIVE;
+    }
+
+    public static Member create(final MemberRegisterRequest request, final PasswordEncoder passwordEncoder) {
+        final Email email = new Email(request.email());
+        final Password password = new Password(request.password()).encode(passwordEncoder);
+        final PhoneNumber phoneNumber = new PhoneNumber(request.phoneNumber());
+        return new Member(email, password, phoneNumber);
+    }
+
     public boolean compareMismatch(final MemberStatus status) {
         return this.status != status;
+    }
+
+    public void changeStatus(final MemberStatus status) {
+        this.status = status;
     }
 
     public String getEmailValue() {

@@ -20,6 +20,10 @@ public enum ErrorCode {
     METHOD_ARGUMENT_NOT_VALID(BAD_REQUEST, "요청 인자가 잘못되었습니다."),
     INVALID_CLAIM_KEY(BAD_REQUEST, "유효하지 않은 클레임 key 입니다."),
     INVALID_EMAIL(BAD_REQUEST, "유효하지 않은 이메일 입니다."),
+    INVALID_PASSWORD(BAD_REQUEST, "비밀번호는 영문, 숫자, 특수문자를 조합하여 8자 이상이어야 합니다."),
+    INVALID_PHONE_NUMBER(BAD_REQUEST, "유효하지 않은 휴대폰 번호 형식입니다."),
+    EXISTS_EMAIL(BAD_REQUEST, "이미 존재하는 이메일 입니다."),
+    EXISTS_PHONE_NUMBER(BAD_REQUEST, "이미 존재하는 휴대폰 번호 입니다."),
 
     /**
      * 401 UNAUTHORIZED

@@ -1,5 +1,6 @@
 package com.handwoong.everyonewaiter.config.security.details;
 
+import com.handwoong.everyonewaiter.domain.member.model.Email;
 import com.handwoong.everyonewaiter.domain.member.model.Member;
 import com.handwoong.everyonewaiter.domain.member.repository.MemberRepository;
 import com.handwoong.everyonewaiter.exception.ErrorCode;
@@ -17,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         final Member member = memberRepository
-                .findByEmail(username)
+                .findByEmail(new Email(username))
                 .orElseThrow(() -> new UsernameNotFoundException(formatExceptionMessage(username)));
         return new CustomUserDetails(member);
     }

@@ -22,13 +22,13 @@ public record PhoneNumber(
 
     private void validateNull(final String phoneNumber) {
         if (!StringUtils.hasText(phoneNumber)) {
-            throw new EveryoneWaiterException(ErrorCode.INVALID_EMAIL, phoneNumber);
+            throw new EveryoneWaiterException(ErrorCode.INVALID_PHONE_NUMBER, phoneNumber);
         }
     }
 
     private void validateFormat(final String phoneNumber) {
         if (!PHONE_NUMBER_PATTERN.matcher(phoneNumber).matches()) {
-            throw new EveryoneWaiterException(ErrorCode.INVALID_EMAIL, phoneNumber);
+            throw new EveryoneWaiterException(ErrorCode.INVALID_PHONE_NUMBER, phoneNumber);
         }
     }
 }
