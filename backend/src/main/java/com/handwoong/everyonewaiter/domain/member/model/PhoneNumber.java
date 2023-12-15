@@ -12,7 +12,8 @@ public record PhoneNumber(
         @Column(length = 20, unique = true, nullable = false)
         String phoneNumber
 ) {
-    public static final Pattern PHONE_NUMBER_REGEX_PATTERN = Pattern.compile("^01[016789]\\d{7,8}$");
+    public static final String PHONE_NUMBER_REGEX = "^01[016789]\\d{7,8}$";
+    private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile(PHONE_NUMBER_REGEX);
 
     public PhoneNumber {
         validateNull(phoneNumber);
@@ -26,7 +27,7 @@ public record PhoneNumber(
     }
 
     private void validateFormat(final String phoneNumber) {
-        if (!PHONE_NUMBER_REGEX_PATTERN.matcher(phoneNumber).matches()) {
+        if (!PHONE_NUMBER_PATTERN.matcher(phoneNumber).matches()) {
             throw new EveryoneWaiterException(ErrorCode.INVALID_EMAIL, phoneNumber);
         }
     }
