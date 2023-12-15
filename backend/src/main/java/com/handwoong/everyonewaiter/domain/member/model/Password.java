@@ -12,8 +12,8 @@ public record Password(
         @Column(nullable = false)
         String password
 ) {
-    public static final Pattern PASSWORD_REGEX_PATTERN =
-            Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@!%*#?&])[A-Za-z\\d@!%*#?&]{8,}$");
+    public static final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@!%*#?&])[A-Za-z\\d@!%*#?&]{8,}$";
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile(PASSWORD_REGEX);
 
     public Password {
         validateNull(password);
@@ -27,7 +27,7 @@ public record Password(
     }
 
     private void validateFormat(final String password) {
-        if (!PASSWORD_REGEX_PATTERN.matcher(password).matches()) {
+        if (!PASSWORD_PATTERN.matcher(password).matches()) {
             throw new EveryoneWaiterException(ErrorCode.INVALID_EMAIL, password);
         }
     }

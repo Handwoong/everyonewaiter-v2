@@ -12,8 +12,8 @@ public record Email(
         @Column(length = 50, unique = true, nullable = false)
         String email
 ) {
-    public static final Pattern EMAIL_REGEX_PATTERN =
-            Pattern.compile("^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$");
+    public static final String EMAIL_REGEX = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 
     public Email {
         validateNull(email);
@@ -27,7 +27,7 @@ public record Email(
     }
 
     private void validateFormat(final String email) {
-        if (!EMAIL_REGEX_PATTERN.matcher(email).matches()) {
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
             throw new EveryoneWaiterException(ErrorCode.INVALID_EMAIL, email);
         }
     }
