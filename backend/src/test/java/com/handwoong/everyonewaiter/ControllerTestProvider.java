@@ -60,7 +60,7 @@ public class ControllerTestProvider {
         return tokenResponse.token();
     }
 
-    private static ExtractableResponse<Response> login(final MemberLoginRequest loginRequest) {
+    public static ExtractableResponse<Response> login(final MemberLoginRequest loginRequest) {
         return RestAssured
                 .given(getSpecification()).log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
