@@ -1,5 +1,7 @@
 package com.handwoong.everyonewaiter.domain.member.controller;
 
+import com.handwoong.everyonewaiter.config.security.jwt.TokenResponse;
+import com.handwoong.everyonewaiter.domain.member.dto.MemberLoginRequest;
 import com.handwoong.everyonewaiter.domain.member.dto.MemberRegisterRequest;
 import com.handwoong.everyonewaiter.domain.member.service.MemberService;
 import jakarta.validation.Valid;
@@ -21,5 +23,11 @@ public class MemberController {
     public ResponseEntity<Void> register(@RequestBody @Valid final MemberRegisterRequest request) {
         memberService.register(request);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenResponse> login(@RequestBody @Valid final MemberLoginRequest request) {
+        final TokenResponse tokenResponse = memberService.login(request);
+        return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
 }

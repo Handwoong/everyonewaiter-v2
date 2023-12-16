@@ -43,3 +43,4 @@ logs/
 compression-logs/
 .DS_Store
 src/main/generated
+static/
