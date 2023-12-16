@@ -1,0 +1,25 @@
+== 회원
+
+=== 회원가입
+
+operation::member-controller-test/register_member[snippets='http-request,http-response']
+
+==== [ERROR] 중복 이메일
+
+operation::member-controller-test/register_duplicate_email[snippets='http-request,http-response']
+
+==== [ERROR] 중복 휴대폰 번호
+
+operation::member-controller-test/register_duplicate_phone_number[snippets='http-request,http-response']
+
+=== 로그인
+
+operation::member-controller-test/login_member[snippets='http-request,http-response']
+
+==== [ERROR] 존재하지 않는 이메일
+
+operation::member-controller-test/login_not_found_email[snippets='http-request,http-response']
+
+==== [ERROR] 잘못된 비밀번호 입력
+
+operation::member-controller-test/login_invalid_password[snippets='http-request,http-response']
